@@ -1,0 +1,33 @@
+{
+  "name": "monitor-ascii-pond",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "check": "tsc --noEmit",
+    "package": "npm run build && node scripts/package.mjs"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "recharts": "3.10.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "typescript": "7.0.2",
+    "vite": "8.3.4"
+  },
+  "description": "锦鲤池塘 · Pond — Monitor 字符锦鲤主题",
+  "license": "MIT",
+  "author": "ayingQAQ",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ayingQAQ/monitor-ascii-pond.git"
+  }
+}

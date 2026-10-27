@@ -1,0 +1,54 @@
+{
+  "name": "锦鲤池塘 · Pond",
+  "short": "monitor-pond",
+  "description": "水静，鱼游。以字符锦鲤与留白构成的池畔监控页。",
+  "version": "1.0.0",
+  "author": "ayingQAQ",
+  "url": "https://github.com/ayingQAQ/monitor-ascii-pond",
+  "config": [
+    {
+      "key": "notice",
+      "type": "text",
+      "label": "公告",
+      "default": ""
+    },
+    {
+      "key": "color_mode",
+      "type": "select",
+      "label": "默认配色",
+      "default": "auto",
+      "options": [
+        {
+          "value": "auto",
+          "label": "跟随系统"
+        },
+        {
+          "value": "light",
+          "label": "纸白"
+        },
+        {
+          "value": "dark",
+          "label": "暖黑"
+        }
+      ]
+    },
+    {
+      "key": "pond_enabled",
+      "type": "boolean",
+      "label": "显示锦鲤池塘",
+      "default": true
+    },
+    {
+      "key": "feeding_enabled",
+      "type": "boolean",
+      "label": "允许投喂",
+      "default": true
+    },
+    {
+      "key": "show_expiry",
+      "type": "boolean",
+      "label": "显示到期信息",
+      "default": true
+    }
+  ]
+}

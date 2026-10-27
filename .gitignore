@@ -1,0 +1,20 @@
+node_modules/
+dist/
+dist-demo/
+.work/
+.env*
+!.env.example
+*.log
+.DS_Store
+theme.tar.gz
+theme.tar.gz.sha256
+
+# Local-only material
+docs/
+test/
+tests/
+dev/
+test-results/
+playwright-report/
+playwright.config.*
+vitest.config.*
