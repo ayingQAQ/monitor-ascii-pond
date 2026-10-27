@@ -1,8 +1,13 @@
 import manifest from "../../theme.json";
 export type Mode = "auto" | "light" | "dark";
+export type DisplayMode = "garden" | "ambient";
 export type Settings = {
   notice: string;
+  hero_eyebrow: string;
+  hero_title: string;
+  hero_subtitle: string;
   color_mode: Mode;
+  display_mode: DisplayMode;
   pond_enabled: boolean;
   feeding_enabled: boolean;
   show_expiry: boolean;

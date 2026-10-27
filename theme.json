@@ -2,7 +2,7 @@
   "name": "锦鲤池塘 · Pond",
   "short": "monitor-pond",
   "description": "水静，鱼游。以字符锦鲤与留白构成的池畔监控页。",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "ayingQAQ",
   "url": "https://github.com/ayingQAQ/monitor-ascii-pond",
   "config": [
@@ -13,9 +13,30 @@
       "default": ""
     },
     {
+      "key": "hero_eyebrow",
+      "type": "string",
+      "label": "首页小标题",
+      "help": "主标题上方的文字，留空隐藏。",
+      "default": "THE LIVING POND / 实时观测"
+    },
+    {
+      "key": "hero_title",
+      "type": "string",
+      "label": "首页标题",
+      "help": "留空隐藏。",
+      "default": "水静，鱼游。"
+    },
+    {
+      "key": "hero_subtitle",
+      "type": "string",
+      "label": "首页副标题",
+      "help": "主标题下方的文字，留空隐藏。",
+      "default": "在一方池塘里，照看远方的节点。"
+    },
+    {
       "key": "color_mode",
       "type": "select",
-      "label": "默认配色",
+      "label": "默认背景色",
       "default": "auto",
       "options": [
         {
@@ -24,11 +45,27 @@
         },
         {
           "value": "light",
-          "label": "纸白"
+          "label": "纸白（浅色）"
         },
         {
           "value": "dark",
-          "label": "暖黑"
+          "label": "暖黑（深色）"
+        }
+      ]
+    },
+    {
+      "key": "display_mode",
+      "type": "select",
+      "label": "默认显示模式",
+      "default": "garden",
+      "options": [
+        {
+          "value": "garden",
+          "label": "水庭模式"
+        },
+        {
+          "value": "ambient",
+          "label": "游鱼背景模式"
         }
       ]
     },

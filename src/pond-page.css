@@ -56,11 +56,15 @@
 .intro {
   margin: 0;
   display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .eyebrow {
   font-size: 9px;
   letter-spacing: 2px;
 }
+.eyebrow > span { min-width: 0; }
+.eyebrow .tiny-line { flex-shrink: 0; }
 .intro h1 {
   font-family: "Songti SC", "SimSun", serif;
   font-size: 65px;

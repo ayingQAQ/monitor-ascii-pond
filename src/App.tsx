@@ -14,6 +14,7 @@ import {
   readPreference,
   savePreference,
   type Mode,
+  type DisplayMode,
 } from "./config/settings";
 import { filterNodes, groupsOf, summaryOf, type Filters } from "./domain/nodes";
 import { rate } from "./domain/format";
@@ -30,6 +31,10 @@ const routeId = () =>
 const initialMode = () => {
   const v = readPreference("mode");
   return v === "auto" || v === "dark" || v === "light" ? v : null;
+};
+const initialDisplay = () => {
+  const v = readPreference("display");
+  return v === "garden" || v === "ambient" ? v : null;
 };
 const connectionLabels = {
   connecting: "正在连接",
@@ -56,9 +61,7 @@ export default function App() {
       status: "all",
     });
   const [preference, setPreference] = useState<Mode | null>(initialMode),
-    [display, setDisplay] = useState<"garden" | "ambient">(() =>
-      readPreference("display") === "ambient" ? "ambient" : "garden",
-    ),
+    [displayPreference, setDisplayPreference] = useState<DisplayMode | null>(initialDisplay),
     [paused, setPaused] = useState(() => readPreference("paused") === "true"),
     [pondFailed, setPondFailed] = useState(false);
   const [origin, setOrigin] = useState<{ x: number; y: number } | null>(null);
@@ -67,7 +70,8 @@ export default function App() {
     forced = useMedia("(forced-colors: active)");
   const hidden = useHidden();
   const choice = preference ?? settings.color_mode,
-    theme = choice === "auto" ? (dark ? "dark" : "light") : choice;
+    theme = choice === "auto" ? (dark ? "dark" : "light") : choice,
+    display = displayPreference ?? settings.display_mode;
   const backContext = useRef({ scroll: 0, id: 0 }),
     previousRoute = useRef(route),
     detailHeading = useRef<HTMLDivElement>(null);
@@ -154,6 +158,9 @@ export default function App() {
     display,
     filters,
     settings.notice,
+    settings.hero_eyebrow,
+    settings.hero_title,
+    settings.hero_subtitle,
     nodes?.map((n) => [n.id, n.name, n.group]),
   ]);
   useEffect(() => {
@@ -198,7 +205,7 @@ export default function App() {
     });
   const toggleDisplay = () => {
     const next = display === "garden" ? "ambient" : "garden";
-    setDisplay(next);
+    setDisplayPreference(next);
     savePreference("display", next);
   };
   const pondEnabled = settings.pond_enabled && !pondFailed;
@@ -283,13 +290,18 @@ export default function App() {
           </nav>
         </header>
         <section className="scene-heading" aria-label="池畔概览">
-          <div className="intro" data-pond-avoid>
-            <div className="eyebrow">
-              <span className="tiny-line" /> THE LIVING POND / 实时观测
+          {(settings.hero_eyebrow.trim() || settings.hero_title.trim() || settings.hero_subtitle.trim()) && (
+            <div className="intro" data-pond-avoid>
+              {settings.hero_eyebrow.trim() && (
+                <div className="eyebrow">
+                  <span className="tiny-line" aria-hidden="true" />
+                  <span>{settings.hero_eyebrow}</span>
+                </div>
+              )}
+              {settings.hero_title.trim() && <h1 data-pond-ink>{settings.hero_title}</h1>}
+              {settings.hero_subtitle.trim() && <p>{settings.hero_subtitle}</p>}
             </div>
-            <h1 data-pond-ink>水静，鱼游。</h1>
-            <p>在一方池塘里，照看远方的节点。</p>
-          </div>
+          )}
           {settings.notice && (
             <p className="notice" data-pond-avoid data-pond-ignore>
               {settings.notice}
@@ -493,7 +505,8 @@ export default function App() {
           <span data-pond-avoid data-pond-ignore>
             <span className="footer-seal">池</span> POND /{" "}
             <a
-              href="https://github.com/monitor-probe/monitor"
+              href="https://github.com/ayingQAQ/monitor-ascii-pond"
+              title="查看 monitor-ascii-pond 项目"
               target="_blank"
               rel="noreferrer"
             >
