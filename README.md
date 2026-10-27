@@ -12,7 +12,7 @@
 
 节点以文字、波纹刻度与水纹印记呈现。你可以查看服务器状态，也可以停下来，往水面投一把鱼食。
 
-![暖黑水庭](previews/overview-dark.png)
+![纸白水庭](previews/overview-light.png)
 
 ## 两种显示方式
 
