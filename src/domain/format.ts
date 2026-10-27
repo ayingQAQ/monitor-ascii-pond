@@ -1,8 +1,11 @@
+const byteUnits = ["B", "KB", "MB", "GB", "TB", "PB"];
+const wholeBytes = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
+const scaledBytes = new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 });
+
 export function bytes(n?: number | null): string {
   if (n == null || !Number.isFinite(n) || n < 0) return "—";
-  const units = ["B", "KB", "MB", "GB", "TB", "PB"];
   const i = n < 1 ? 0 : Math.min(5, Math.floor(Math.log(n) / Math.log(1024)));
-  return `${(n / 1024 ** i).toLocaleString("en-US", { maximumFractionDigits: i ? 1 : 0 })} ${units[i]}`;
+  return `${(i ? scaledBytes : wholeBytes).format(n / 1024 ** i)} ${byteUnits[i]}`;
 }
 export const rate = (n?: number | null) => (n == null ? "—" : `${bytes(n)}/s`);
 export const pct = (used?: number, total?: number) =>

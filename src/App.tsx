@@ -47,7 +47,8 @@ export default function App() {
   const [site, setSite] = useState<Site | null>(null),
     [siteError, setSiteError] = useState(""),
     [attempt, setAttempt] = useState(0),
-    [settings, setSettings] = useState(defaults);
+    [settings, setSettings] = useState(defaults),
+    [settingsReady, setSettingsReady] = useState(false);
   const [snapshot, setSnapshot] = useState<Snapshot>({
     nodes: null,
     state: "connecting",
@@ -94,7 +95,10 @@ export default function App() {
     if (hidden) return;
     const controller = new AbortController();
     source.loadConfig(controller.signal).then((v) => {
-      if (!controller.signal.aborted) setSettings(v);
+      if (!controller.signal.aborted) {
+        setSettings(v);
+        setSettingsReady(true);
+      }
     });
     return () => controller.abort();
   }, [hidden]);
@@ -213,7 +217,7 @@ export default function App() {
   return (
     <>
       <PondLayer
-        enabled={pondEnabled}
+        enabled={settingsReady && pondEnabled}
         paused={paused}
         feeding={settings.feeding_enabled}
         theme={theme}
