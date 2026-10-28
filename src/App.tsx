@@ -212,6 +212,7 @@ export default function App() {
   };
   const pondEnabled = settings.pond_enabled && !pondFailed;
   const ambient = route !== null || display === "ambient";
+  const hasIntro = Boolean(settings.hero_eyebrow.trim() || settings.hero_title.trim() || settings.hero_subtitle.trim());
   return (
     <>
       <PondLayer
@@ -223,7 +224,7 @@ export default function App() {
         onUnavailable={unavailable}
       />
       {ambient && <div className="ambient-water" data-pond-habitat data-pond-overflow="visible" data-pond-scene="ambient" aria-hidden="true" />}
-      <div className={"site-shell" + (route !== null ? " has-detail" : "") + (ambient ? " ambient-scene" : "") + (route === null && ambient ? " home-ambient" : "")}>
+      <div className={"site-shell" + (route !== null ? " has-detail" : "") + (ambient ? " ambient-scene" : "") + (route === null && ambient ? " home-ambient" : "") + (route === null && !hasIntro ? " home-compact" : "")}>
         <a className="skip-link" href="#main">
           跳到主要内容
         </a>
@@ -292,7 +293,7 @@ export default function App() {
           </nav>
         </header>
         <section className="scene-heading" aria-label="池畔概览">
-          {(settings.hero_eyebrow.trim() || settings.hero_title.trim() || settings.hero_subtitle.trim()) && (
+          {hasIntro && (
             <div className="intro" data-pond-avoid>
               {settings.hero_eyebrow.trim() && (
                 <div className="eyebrow">

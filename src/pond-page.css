@@ -1473,3 +1473,39 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .home-ambient .notice { grid-column: 1 / -1; order: 3; margin: 0; }
   .home-ambient .filters { grid-template-columns: minmax(0,1fr) 160px 140px; gap: 24px; }
 }
+
+/* With no intro copy, the readings form a quiet masthead directly above the roster. */
+.home-compact .scene-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+  padding: 10px 0 20px;
+  margin-bottom: 0;
+}
+.home-compact .summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: 100%;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+.home-compact .summary:before { display: none; }
+.home-compact .summary > div { padding-left: clamp(12px, 1.5vw, 24px); gap: 4px; }
+.home-compact .summary > div:first-child { padding-left: 0; border-left: 0; }
+.home-compact .summary strong { font-size: 22px; }
+.home-compact .notice { position: static; order: 2; margin: 0; max-width: none; }
+.home-compact .roster-column { padding-top: 22px; }
+@media (min-width: 1100px) {
+  .home-compact.home-ambient .summary > div { flex-direction: row; align-items: baseline; gap: 16px; }
+}
+@media (max-width: 1099px) {
+  .home-compact .water-column { margin: 18px 0 12px; }
+}
+@media (max-width: 639px) {
+  .home-compact .scene-heading { padding: 8px 0 16px; }
+  .home-compact .summary span { font-size: 9px; }
+  .home-compact .summary strong { font-size: clamp(16px, 4.4vw, 19px); }
+  .home-compact .roster-column { padding-top: 16px; }
+}

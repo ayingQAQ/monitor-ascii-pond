@@ -2,7 +2,7 @@
   "name": "锦鲤池塘 · Pond",
   "short": "monitor-pond",
   "description": "水静，鱼游。以字符锦鲤与留白构成的池畔监控页。",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "ayingQAQ",
   "url": "https://github.com/ayingQAQ/monitor-ascii-pond",
   "config": [
@@ -17,21 +17,21 @@
       "type": "string",
       "label": "首页小标题",
       "help": "主标题上方的文字，留空隐藏。",
-      "default": "THE LIVING POND / 实时观测"
+      "default": ""
     },
     {
       "key": "hero_title",
       "type": "string",
       "label": "首页标题",
       "help": "留空隐藏。",
-      "default": "水静，鱼游。"
+      "default": ""
     },
     {
       "key": "hero_subtitle",
       "type": "string",
       "label": "首页副标题",
       "help": "主标题下方的文字，留空隐藏。",
-      "default": "在一方池塘里，照看远方的节点。"
+      "default": ""
     },
     {
       "key": "color_mode",
