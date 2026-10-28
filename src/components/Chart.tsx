@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 
-type Series = { key: string; name: string; color: string; dashed?: boolean };
+type Series = {
+  key: string;
+  name: string;
+  color: string;
+  dashed?: boolean;
+  data?: object[];
+  description?: string;
+};
 export type ChartProps = {
   title: string;
   rows: object[];
@@ -56,9 +63,10 @@ export function Chart(props: ChartProps) {
         <h4>{props.title}</h4>
         <div className="chart-legend">
           {props.series.map((s) => (
-            <span key={s.key}>
+            <span key={s.key} className={s.description ? "chart-probe" : undefined}>
               <i style={{ borderColor: s.color, borderTopStyle: s.dashed ? "dashed" : "solid" }} />
-              {s.name}
+              <span className="chart-series-name">{s.name}</span>
+              {s.description && <small>{s.description}</small>}
             </span>
           ))}
         </div>

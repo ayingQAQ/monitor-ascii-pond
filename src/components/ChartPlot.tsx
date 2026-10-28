@@ -54,6 +54,7 @@ export default function ChartPlot({ rows, series, format }: ChartProps) {
         <Tooltip
           labelFormatter={dateTime}
           formatter={(v) => (v == null ? "—" : format(Number(v)))}
+          itemSorter={(item) => series.findIndex((s) => s.key === item.dataKey)}
           contentStyle={{
             background: "var(--bg)",
             border: "1px solid var(--line)",
@@ -66,6 +67,7 @@ export default function ChartPlot({ rows, series, format }: ChartProps) {
           <Line
             key={s.key}
             type="linear"
+            data={s.data}
             dataKey={s.key}
             name={s.name}
             stroke={s.color}

@@ -2,7 +2,7 @@
   "name": "锦鲤池塘 · Pond",
   "short": "monitor-pond",
   "description": "水静，鱼游。以字符锦鲤与留白构成的池畔监控页。",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "author": "ayingQAQ",
   "url": "https://github.com/ayingQAQ/monitor-ascii-pond",
   "config": [

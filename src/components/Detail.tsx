@@ -299,20 +299,21 @@ export default function Detail({
               <p className="history-message">这个时间范围内还没有资源记录。</p>
             )
           ) : latency.series.length ? (
-            latency.series.map((p) => (
-              <div key={p.key} className="probe-chart">
-                <p className="probe-description">
-                  {p.description}
-                  {p.allLost ? " · 全部丢包" : ""}
-                </p>
-                <Chart
-                  title={p.label}
-                  rows={p.data}
-                  format={(v) => `${Number(v.toFixed(1))} ms`}
-                  series={[{ key: p.key, name: "延迟", color: p.color }]}
-                />
-              </div>
-            ))
+            <div className="latency-comparison">
+              <Chart
+                title="线路延迟"
+                rows={latency.rows}
+                format={(v) => `${Number(v.toFixed(1))} ms`}
+                series={latency.series.map((p) => ({
+                  key: p.key,
+                  name: p.label,
+                  color: p.color,
+                  // Preserve each probe's sampling interval and real gaps on the shared axis.
+                  data: p.data,
+                  description: p.description + (p.allLost ? " · 全部丢包" : ""),
+                }))}
+              />
+            </div>
           ) : (
             <p className="history-message">这个时间范围内还没有延迟记录。</p>
           )}
