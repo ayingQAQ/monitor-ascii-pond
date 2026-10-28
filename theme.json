@@ -57,7 +57,7 @@
       "key": "display_mode",
       "type": "select",
       "label": "默认显示模式",
-      "default": "garden",
+      "default": "ambient",
       "options": [
         {
           "value": "garden",

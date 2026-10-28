@@ -1474,7 +1474,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .home-ambient .filters { grid-template-columns: minmax(0,1fr) 160px 140px; gap: 24px; }
 }
 
-/* With no intro copy, the readings form a quiet masthead directly above the roster. */
+/* Without a main title, optional copy and readings share a compact masthead. */
 .home-compact .scene-heading {
   display: flex;
   flex-direction: column;
@@ -1483,6 +1483,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   padding: 10px 0 20px;
   margin-bottom: 0;
 }
+.home-compact .intro { display: flex; flex-direction: column; gap: 8px; }
+.home-compact .intro p { margin: 0; line-height: 1.6; letter-spacing: 1px; }
 .home-compact .summary {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
