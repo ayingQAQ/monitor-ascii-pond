@@ -73,21 +73,6 @@
   line-height: 1.3;
   margin: 13px 0 10px;
 }
-.intro h1:after {
-  content: "池";
-  display: inline-grid;
-  place-items: center;
-  vertical-align: middle;
-  margin-left: 20px;
-  font-family: serif;
-  font-size: 18px;
-  letter-spacing: 0;
-  width: 32px;
-  height: 36px;
-  transform: rotate(-7deg);
-  border: 1px solid var(--accent);
-  color: var(--accent);
-}
 .intro p {
   font-size: 12px;
   letter-spacing: 3px;
@@ -679,9 +664,6 @@
   .intro h1 {
     font-size: 50px;
     letter-spacing: 5px;
-  }
-  .intro h1:after {
-    display: none;
   }
   .summary {
     gap: 20px;
