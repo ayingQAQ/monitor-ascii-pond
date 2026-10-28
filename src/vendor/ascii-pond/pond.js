@@ -76,6 +76,8 @@ const DIM_UNDER_CONTENT = 0.15;
 const MERGE_GAP_PX = 160;
 /** A merge may not grow the block far beyond its parts — see the guard in mergeNearby. */
 const MAX_MERGE_GROWTH = 1.6;
+/** Half the tile area: keep both axes at the same scale, without integer rounding. */
+const CELL_SCALE = Math.SQRT1_2;
 
 const rippleLife = (r) => 2.2 + r.strength * 1.6;
 
@@ -240,8 +242,8 @@ export class PondRenderer {
     this.layerB = null;
     this.reveal = null;
     this.dpr = 1;
-    this.cellW = 8;
-    this.cellH = 12;
+    this.cellW = 8 * CELL_SCALE;
+    this.cellH = 12 * CELL_SCALE;
     this.cols = 0;
     this.rows = 0;
     this.fontFamily = '"Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace';
@@ -258,9 +260,12 @@ export class PondRenderer {
 
   resize(width, height, dpr) {
     this.dpr = dpr;
-    // Near-square tiles, large enough to read each etched glyph.
-    this.cellW = clamp(Math.round(width / 125), 8, 12);
-    this.cellH = this.cellW + 2;
+    // Derive BOTH axes from the original grid; adding 2 after scaling would distort its aspect.
+    const baseCellW = clamp(Math.round(width / 125), 8, 12);
+    const baseCellH = baseCellW + 2;
+    this.cellW = baseCellW * CELL_SCALE;
+    this.cellH = baseCellH * CELL_SCALE;
+    this.fontSize = Math.round(baseCellH * 0.72) * CELL_SCALE;
     this.cols = Math.ceil(width / this.cellW);
     this.rows = Math.ceil(height / this.cellH);
     this.canvas.width = Math.round(width * dpr);
@@ -327,7 +332,7 @@ export class PondRenderer {
       ctx.fillRect(0, 0, w, h);
     }
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
-    ctx.font = `600 ${Math.round(this.cellH * 0.72)}px ${this.fontFamily}`;
+    ctx.font = `600 ${this.fontSize}px ${this.fontFamily}`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
@@ -438,7 +443,8 @@ export class PondRenderer {
   setDimBoxes(boxes, ceiling = 1) {
     const { cols, rows, cellW: cw, cellH: ch, cellDim } = this;
     cellDim.fill(ceiling);
-    const pad = cw * 4;
+    // Text clearance stays the same in page pixels when only rendering density changes.
+    const pad = cw / CELL_SCALE * 4;
     for (const b of boxes) {
       const c0 = Math.max(0, Math.floor((b.left - pad) / cw));
       const c1 = Math.min(cols - 1, Math.floor((b.right + pad) / cw));
@@ -601,12 +607,12 @@ export class PondRenderer {
       if (grid.tileAlpha[i] > 0) {
         ctx.globalAlpha = grid.tileAlpha[i] * cellDim[i];
         ctx.fillStyle = this.style(grid.tile[i]);
-        ctx.fillRect(x + 1, y + 1, cw - 1, ch - 1);
+        ctx.fillRect(x + CELL_SCALE, y + CELL_SCALE, cw - CELL_SCALE, ch - CELL_SCALE);
       }
       if (code === 32) continue;
       ctx.globalAlpha = grid.alpha[i] * cellDim[i];
       ctx.fillStyle = this.style(grid.color[i]);
-      ctx.fillText(String.fromCharCode(code), x + cw / 2, y + ch / 2 + 1);
+      ctx.fillText(String.fromCharCode(code), x + cw / 2, y + ch / 2 + CELL_SCALE);
     }
   }
 
