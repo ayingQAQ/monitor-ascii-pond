@@ -1,6 +1,4 @@
 import {
-  lazy,
-  Suspense,
   useCallback,
   useEffect,
   useRef,
@@ -23,7 +21,7 @@ import { PondLayer } from "./pond/PondLayer";
 import { NodeRow } from "./components/NodeRow";
 import { PondStage } from "./components/PondStage";
 import { PaperSelect } from "./components/PaperSelect";
-const Detail = lazy(() => import("./components/Detail"));
+import Detail from "./components/Detail";
 const routeId = () =>
   location.pathname === "/"
     ? null
@@ -473,18 +471,12 @@ export default function App() {
                   </button>
                 </div>
                 {selected ? (
-                  <Suspense
-                    fallback={
-                      <p className="empty-message">正在展开观测记录…</p>
-                    }
-                  >
-                    <Detail
-                      key={selected.id}
-                      node={selected}
-                      historyDays={site?.history_days}
-                      showExpiry={settings.show_expiry}
-                    />
-                  </Suspense>
+                  <Detail
+                    key={selected.id}
+                    node={selected}
+                    historyDays={site?.history_days}
+                    showExpiry={settings.show_expiry}
+                  />
                 ) : (
                   <div className="empty-message" data-pond-avoid>
                     <h2>{nodes ? "节点不存在或未公开" : "正在读取节点…"}</h2>

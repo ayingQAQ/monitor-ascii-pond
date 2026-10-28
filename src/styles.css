@@ -724,6 +724,18 @@ option {
   width: 100%;
   min-width: 0;
 }
+.chart-placeholder {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.chart-placeholder button {
+  color: var(--accent);
+}
 .history-chart {
   margin-top: 22px;
 }
