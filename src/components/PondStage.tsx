@@ -5,12 +5,14 @@ import { rate } from "../domain/format";
 export function PondStage({
   rx,
   tx,
+  partial = false,
   paused,
   enabled,
   feeding,
 }: {
   rx: number | null;
   tx: number | null;
+  partial?: boolean;
   paused: boolean;
   enabled: boolean;
   feeding: boolean;
@@ -104,7 +106,7 @@ export function PondStage({
       </div>
       <div className="pond-flow" data-pond-ignore>
         <div className="flow-title" data-pond-avoid>
-          <span>水流读数</span>
+          <span>{partial ? "已上报合计" : "水流读数"}</span>
           <small>LIVE TRAFFIC</small>
         </div>
         <div className="flow-reading">

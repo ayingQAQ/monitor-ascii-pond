@@ -324,11 +324,11 @@ export default function App() {
               </strong>
             </div>
             <div>
-              <span>↓ 下载</span>
+              <span>↓ 下载{summary.missing > 0 ? " · 已上报合计" : ""}</span>
               <strong data-pond-ink>{nodes ? rate(summary.rx) : "—"}</strong>
             </div>
             <div>
-              <span>↑ 上传</span>
+              <span>↑ 上传{summary.missing > 0 ? " · 已上报合计" : ""}</span>
               <strong data-pond-ink>{nodes ? rate(summary.tx) : "—"}</strong>
             </div>
           </div>
@@ -492,6 +492,7 @@ export default function App() {
             <PondStage
               rx={nodes ? summary.rx : null}
               tx={nodes ? summary.tx : null}
+              partial={summary.missing > 0}
               paused={paused || reduced}
               enabled={pondEnabled&&!forced}
               feeding={settings.feeding_enabled}

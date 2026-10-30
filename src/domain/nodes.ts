@@ -185,6 +185,8 @@ export const filterNodes = (nodes: NodeData[], f: Filters) =>
       (f.status === "all" || n.online === (f.status === "online")),
   );
 export function summaryOf(nodes: NodeData[]) {
+  const online = nodes.filter((n) => n.online);
+  const reported = online.filter((n) => n.metrics !== null);
   const sumKnown = (values: (number | undefined)[]) =>
     values.length === 0
       ? 0
@@ -194,8 +196,9 @@ export function summaryOf(nodes: NodeData[]) {
   return {
     online: nodes.filter((n) => n.online).length,
     total: nodes.length,
-    rx: sumKnown(nodes.map((n) => (n.online ? n.metrics?.net_rx : 0))),
-    tx: sumKnown(nodes.map((n) => (n.online ? n.metrics?.net_tx : 0))),
+    rx: online.length && !reported.length ? null : sumKnown(reported.map((n) => n.metrics?.net_rx)),
+    tx: online.length && !reported.length ? null : sumKnown(reported.map((n) => n.metrics?.net_tx)),
+    missing: online.length - reported.length,
     monthRx: sumKnown(nodes.map((n) => n.month_rx)),
     monthTx: sumKnown(nodes.map((n) => n.month_tx)),
   };
@@ -204,9 +207,9 @@ export function monthUsage(
   n: Pick<NodeData, "month_used" | "month_rx" | "month_tx" | "traffic_mode">,
 ): number | null {
   if (finite(n.month_used)) return n.month_used;
+  if (n.traffic_mode === "up") return finite(n.month_tx) ? n.month_tx : null;
+  if (n.traffic_mode === "down") return finite(n.month_rx) ? n.month_rx : null;
   if (!finite(n.month_rx) || !finite(n.month_tx)) return null;
-  if (n.traffic_mode === "up") return n.month_tx;
-  if (n.traffic_mode === "down") return n.month_rx;
   return n.traffic_mode === "max"
     ? Math.max(n.month_rx, n.month_tx)
     : n.month_rx + n.month_tx;
